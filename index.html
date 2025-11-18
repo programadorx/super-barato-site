@@ -217,44 +217,18 @@
       color: var(--muted);
     }
 
-    .hero-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 18px 18px 16px;
-      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.12);
-    }
-    .hero-card-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin: 0 0 8px;
-    }
-    .hero-card-sub {
-      margin: 0 0 12px;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    .hero-card-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 12px;
-      font-size: 0.85rem;
-    }
-    .hero-card-list li {
-      margin-bottom: 6px;
+    .hero-media {
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
     }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: #fefce8;
-      color: #854d0e;
-      font-size: 0.7rem;
-      font-weight: 500;
+    .hero-image {
+      width: 100%;
+      max-width: 460px;
+      border-radius: 22px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.24);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      display: block;
     }
 
     /* SECCIONES GENERALES */
@@ -312,6 +286,52 @@
       font-size: 0.75rem;
       font-weight: 500;
       margin-bottom: 6px;
+    }
+
+    /* GALERÍA */
+    .screens-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+    @media (max-width: 1024px) {
+      .screens-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 720px) {
+      .screens-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 480px) {
+      .screens-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .screen-item {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .screen-item img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+    }
+    .screen-caption {
+      font-size: 0.8rem;
+      color: var(--fg);
+      font-weight: 500;
     }
 
     /* FAQ */
@@ -421,6 +441,7 @@
           <a href="#que-es">Qué es</a>
           <a href="#como-funciona">Cómo funciona</a>
           <a href="#beneficios">Beneficios</a>
+          <a href="#galeria">Capturas</a>
           <a href="#faq">Preguntas</a>
           <a href="/privacy">Privacidad</a>
           <a href="/terms">Términos</a>
@@ -435,7 +456,7 @@
         <div class="hero-inner">
           <div>
             <div class="hero-tag">
-              <span>✓</span> App pensada para el bolsillo panameño
+              <span>✓</span> Tu asesor personal de ahorro en el súper
             </div>
             <h1 class="hero-title">
               Ahorra en tu compra del súper
@@ -447,12 +468,12 @@
             </p>
             <ul class="hero-bullets">
               <li>Compara precios por supermercado.</li>
-              <li>Revisa ofertas reales, no solo anuncios.</li>
+              <li>Revisa ofertas verificadas en tiempo casi real.</li>
               <li>Arma tu lista y evita sorpresas en la caja.</li>
             </ul>
             <div class="hero-cta-row">
-              <!-- Reemplaza # con el enlace real de Google Play cuando la publiques -->
-              <a href="#" class="btn-primary">Próximamente en Google Play</a>
+              <!-- Cuando tengas el enlace real a Google Play, reemplaza # -->
+              <a href="#" class="btn-primary">Disponible en Google Play</a>
               <a href="#como-funciona" class="btn-secondary">Ver cómo funciona</a>
             </div>
             <p class="hero-note">
@@ -460,22 +481,13 @@
             </p>
           </div>
 
-          <aside class="hero-card">
-            <div class="hero-badge">Vista rápida</div>
-            <h2 class="hero-card-title">Todo tu súper, en un solo vistazo</h2>
-            <p class="hero-card-sub">
-              En lugar de abrir varias apps o folletos, ves precios, ofertas e historial desde un mismo lugar.
-            </p>
-            <ul class="hero-card-list">
-              <li>✓ Búsqueda por nombre o código de barras.</li>
-              <li>✓ Comparación por supermercado.</li>
-              <li>✓ Historial de precios y ofertas.</li>
-              <li>✓ Canasta y productos favoritos.</li>
-            </ul>
-            <p class="hero-card-sub">
-              Super Barato no vende productos; te ayuda a tomar mejores decisiones antes de comprar.
-            </p>
-          </aside>
+          <div class="hero-media">
+            <!-- Banner principal (1024x500 aprox) -->
+            <img
+              src="img/hero-super-barato.png"
+              alt="Super Barato — Tu asesor personal de ahorro"
+              class="hero-image">
+          </div>
         </div>
       </section>
 
@@ -580,6 +592,47 @@
               <p>
                 La app identificará productos en oferta y, más adelante, incluirá calificaciones y comentarios de otros usuarios.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GALERÍA DE CAPTURAS -->
+      <section class="section" id="galeria">
+        <div class="section-inner">
+          <h2 class="section-title">Capturas de la app</h2>
+          <p class="section-subtitle">
+            Una vista rápida de lo que verás dentro de Super Barato cuando la descargues en tu teléfono.
+          </p>
+
+          <div class="screens-grid">
+            <div class="screen-item">
+              <img src="img/screenshot-01.png" alt="¿Dónde te sale más barata la compra?">
+              <div class="screen-caption">¿Dónde te sale más barata la compra?</div>
+            </div>
+            <div class="screen-item">
+              <img src="img/screenshot-02.png" alt="Ofertas verificadas en tiempo real">
+              <div class="screen-caption">Ofertas verificadas en tiempo real</div>
+            </div>
+            <div class="screen-item">
+              <img src="img/screenshot-03.png" alt="Los precios más bajos en tu bolsillo">
+              <div class="screen-caption">Los precios más bajos en tu bolsillo</div>
+            </div>
+            <div class="screen-item">
+              <img src="img/screenshot-04.png" alt="Escanea y ahorra al instante">
+              <div class="screen-caption">Escanea y ahorra al instante</div>
+            </div>
+            <div class="screen-item">
+              <img src="img/screenshot-05.png" alt="Tus productos favoritos, siempre en oferta">
+              <div class="screen-caption">Tus productos favoritos, siempre en oferta</div>
+            </div>
+            <div class="screen-item">
+              <img src="img/screenshot-06.png" alt="Tu cesta más inteligente">
+              <div class="screen-caption">Tu cesta más inteligente</div>
+            </div>
+            <div class="screen-item">
+              <img src="img/screenshot-07.png" alt="Compara precios automáticamente entre supermercados">
+              <div class="screen-caption">Compara precios automáticamente entre supermercados</div>
             </div>
           </div>
         </div>
