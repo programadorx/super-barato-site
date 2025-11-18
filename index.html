@@ -4,37 +4,651 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Super Barato — Sitio Oficial</title>
-  <meta name="description" content="Super Barato: comparación de precios y ofertas de supermercados en Panamá.">
+  <title>Super Barato — Compara precios de supermercados en Panamá</title>
+  <meta name="description" content="Super Barato es una app para comparar precios y ofertas de supermercados en Panamá, ahorrar dinero y organizar mejor tus compras.">
   <style>
-    :root { --fg:#0f172a; --muted:#475569; --accent:#2563eb; --bg:#f8fafc; }
-    html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; }
-    .wrap { max-width: 880px; margin: 48px auto; padding: 0 16px; }
-    header h1 { font-size: 2rem; margin: 0 0 6px; }
-    header p { color: var(--muted); margin: 0 0 16px; }
-    nav a { margin-right: 12px; text-decoration:none; color: var(--accent); }
-    .card { background:#fff; border:1px solid #e2e8f0; border-radius: 14px; padding: 20px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
-    footer { margin-top: 24px; color: var(--muted); font-size:.9rem; }
+    :root {
+      --bg: #f8fafc;
+      --fg: #0f172a;
+      --muted: #64748b;
+      --accent: #16a34a;
+      --accent-soft: #bbf7d0;
+      --card: #ffffff;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    html,body {
+      margin:0;
+      padding:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+    header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(248, 250, 252, 0.96);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ecfdf5;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .brand-name {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .brand-tagline {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    nav.header-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    nav.header-nav a {
+      color: var(--muted);
+    }
+    nav.header-nav a:hover {
+      color: var(--fg);
+    }
+    .header-cta {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #ecfdf5;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 720px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav.header-nav {
+        justify-content: flex-start;
+      }
+    }
+
+    main { flex: 1; }
+
+    /* HERO */
+    .hero {
+      padding: 40px 16px 32px;
+    }
+    .hero-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+    }
+    @media (max-width: 840px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: #166534;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .hero-tag span {
+      display: inline-flex;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      align-items: center;
+      justify-content: center;
+      background: #22c55e;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .hero-title {
+      font-size: clamp(1.9rem, 3vw + 1rem, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 0 0 10px;
+    }
+    .hero-highlight {
+      color: #16a34a;
+    }
+    .hero-subtitle {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 34rem;
+    }
+    .hero-bullets {
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .hero-bullets li {
+      margin-bottom: 4px;
+    }
+    .hero-bullets li::before {
+      content: "• ";
+      color: #16a34a;
+      font-weight: 700;
+    }
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .btn-primary {
+      border-radius: 999px;
+      border: none;
+      padding: 10px 18px;
+      background: #16a34a;
+      color: #ecfdf5;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .btn-secondary {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      background: #ffffff;
+      color: var(--fg);
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.12);
+    }
+    .hero-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0 0 8px;
+    }
+    .hero-card-sub {
+      margin: 0 0 12px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .hero-card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px;
+      font-size: 0.85rem;
+    }
+    .hero-card-list li {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #fefce8;
+      color: #854d0e;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    /* SECCIONES GENERALES */
+    .section {
+      padding: 24px 16px 8px;
+    }
+    .section-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0 0 6px;
+    }
+    .section-subtitle {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 40rem;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+    @media (max-width: 840px) {
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 14px 16px 16px;
+    }
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+    .card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #14532d;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    /* FAQ */
+    .faq {
+      margin-top: 12px;
+      border-top: 1px dashed var(--border);
+      padding-top: 12px;
+    }
+    .faq-item {
+      margin-bottom: 10px;
+    }
+    .faq-item summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .faq-item p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* CTA FINAL */
+    .cta-final {
+      margin-top: 24px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: #ecfdf5;
+      border: 1px dashed #6ee7b7;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .cta-final-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .cta-final-text {
+      font-size: 0.9rem;
+      color: #166534;
+    }
+    .cta-final-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .cta-final input[type="email"] {
+      flex: 1 1 180px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #a7f3d0;
+      font-size: 0.9rem;
+    }
+    .cta-final button {
+      border-radius: 999px;
+      border: none;
+      padding: 9px 16px;
+      background: #16a34a;
+      color: #ecfdf5;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 18px 16px 28px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 24px;
+    }
+    .footer-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+    .footer-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--muted);
+    }
+    .footer-links a:hover {
+      color: var(--fg);
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="page">
     <header>
-      <h1>Super Barato</h1>
-      <p>Plataforma de comparación de precios y ofertas de supermercados en Panamá.</p>
-      <nav>
-        <a href="/privacy">Política de Privacidad</a>
-        <a href="/terms">Términos y Condiciones</a>
-        <a href="mailto:bluetechnologypty@gmail.com">Contacto</a>
-      </nav>
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-logo">S</div>
+          <div class="brand-text">
+            <div class="brand-name">Super Barato</div>
+            <div class="brand-tagline">Compara precios en Panamá</div>
+          </div>
+        </div>
+        <nav class="header-nav">
+          <a href="#que-es">Qué es</a>
+          <a href="#como-funciona">Cómo funciona</a>
+          <a href="#beneficios">Beneficios</a>
+          <a href="#faq">Preguntas</a>
+          <a href="/privacy">Privacidad</a>
+          <a href="/terms">Términos</a>
+          <a class="header-cta" href="mailto:bluetechnologypty@gmail.com">Contacto</a>
+        </nav>
+      </div>
     </header>
-    <main class="card">
-      <h2>Bienvenido</h2>
-      <p>Usa los enlaces de arriba para conocer nuestras políticas. Este sitio sirve como página principal para efectos de transparencia y cumplimiento con Google OAuth.</p>
-      <p><strong>Última actualización:</strong> 2025-10-06</p>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-inner">
+          <div>
+            <div class="hero-tag">
+              <span>✓</span> App pensada para el bolsillo panameño
+            </div>
+            <h1 class="hero-title">
+              Ahorra en tu compra del súper
+              <span class="hero-highlight">comparando precios antes de salir de casa.</span>
+            </h1>
+            <p class="hero-subtitle">
+              Super Barato te muestra cuánto cuesta un mismo producto en distintos supermercados de Panamá,
+              para que elijas dónde comprar y cuánto quieres gastar.
+            </p>
+            <ul class="hero-bullets">
+              <li>Compara precios por supermercado.</li>
+              <li>Revisa ofertas reales, no solo anuncios.</li>
+              <li>Arma tu lista y evita sorpresas en la caja.</li>
+            </ul>
+            <div class="hero-cta-row">
+              <!-- Reemplaza # con el enlace real de Google Play cuando la publiques -->
+              <a href="#" class="btn-primary">Próximamente en Google Play</a>
+              <a href="#como-funciona" class="btn-secondary">Ver cómo funciona</a>
+            </div>
+            <p class="hero-note">
+              Este sitio también sirve como página principal para efectos de transparencia y cumplimiento con Google OAuth.
+            </p>
+          </div>
+
+          <aside class="hero-card">
+            <div class="hero-badge">Vista rápida</div>
+            <h2 class="hero-card-title">Todo tu súper, en un solo vistazo</h2>
+            <p class="hero-card-sub">
+              En lugar de abrir varias apps o folletos, ves precios, ofertas e historial desde un mismo lugar.
+            </p>
+            <ul class="hero-card-list">
+              <li>✓ Búsqueda por nombre o código de barras.</li>
+              <li>✓ Comparación por supermercado.</li>
+              <li>✓ Historial de precios y ofertas.</li>
+              <li>✓ Canasta y productos favoritos.</li>
+            </ul>
+            <p class="hero-card-sub">
+              Super Barato no vende productos; te ayuda a tomar mejores decisiones antes de comprar.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- QUÉ ES / PARA QUIÉN -->
+      <section class="section" id="que-es">
+        <div class="section-inner">
+          <h2 class="section-title">¿Qué es Super Barato?</h2>
+          <p class="section-subtitle">
+            Es una aplicación móvil para comparar precios de supermercados en Panamá. 
+            Te permite ver cuánto cuesta un mismo producto en distintos comercios, 
+            identificar ofertas y organizar tu compra con más tranquilidad.
+          </p>
+          <div class="grid-2">
+            <div class="card">
+              <div class="pill">Para personas y familias</div>
+              <h3>Hecha para el día a día</h3>
+              <p>
+                Ideal para familias, personas que viven solas y estudiantes que necesitan estirar el presupuesto.
+                Puedes revisar precios antes de salir de casa y evitar compras impulsivas.
+              </p>
+            </div>
+            <div class="card">
+              <div class="pill">Pensando en el futuro</div>
+              <h3>También útil para comercios</h3>
+              <p>
+                A futuro, Super Barato será una herramienta para minisúpers y comercios que quieran
+                entender mejor los precios del mercado y ajustar sus ofertas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CÓMO FUNCIONA -->
+      <section class="section" id="como-funciona">
+        <div class="section-inner">
+          <h2 class="section-title">¿Cómo funciona?</h2>
+          <p class="section-subtitle">
+            Super Barato está diseñada para que cualquier persona pueda usarla en pocos pasos.
+          </p>
+          <div class="grid-2">
+            <div class="card">
+              <h3>1. Busca el producto</h3>
+              <p>
+                Escribe el nombre del producto, escanea el código de barras con la cámara o navega por las categorías.
+              </p>
+            </div>
+            <div class="card">
+              <h3>2. Compara precios</h3>
+              <p>
+                Verás una lista con los supermercados donde está disponible, su precio, si está en oferta
+                y desde cuándo se actualizó la información.
+              </p>
+            </div>
+            <div class="card">
+              <h3>3. Arma tu canasta</h3>
+              <p>
+                Guarda tus productos frecuentes como favoritos y crea tu canasta de compra para estimar cuánto vas a gastar.
+              </p>
+            </div>
+            <div class="card">
+              <h3>4. Decide dónde comprar</h3>
+              <p>
+                Con esa información, puedes elegir el supermercado que más te convenga según precio, cercanía y ofertas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BENEFICIOS -->
+      <section class="section" id="beneficios">
+        <div class="section-inner">
+          <h2 class="section-title">Beneficios y características clave</h2>
+          <p class="section-subtitle">
+            Más que un simple listado de productos, Super Barato quiere ser tu herramienta de referencia 
+            para entender cómo se mueven los precios y cuidar tu bolsillo.
+          </p>
+          <div class="grid-2">
+            <div class="card">
+              <h3>Ahorro de dinero</h3>
+              <p>
+                Verás dónde tu compra completa puede salir más barata, no solo un producto suelto. 
+                Puedes evitar pagar de más cuando hay alternativas mejores.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Ahorro de tiempo</h3>
+              <p>
+                En lugar de revisar varias apps o páginas, todo está concentrado en un solo lugar. 
+                Menos tiempo comparando, más tiempo para ti.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Historial de precios</h3>
+              <p>
+                Podrás ver cómo han cambiado los precios con el tiempo para entender mejor si una oferta realmente vale la pena.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Ofertas y reseñas (en desarrollo)</h3>
+              <p>
+                La app identificará productos en oferta y, más adelante, incluirá calificaciones y comentarios de otros usuarios.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section" id="faq">
+        <div class="section-inner">
+          <h2 class="section-title">Preguntas frecuentes</h2>
+          <p class="section-subtitle">
+            Algunas dudas comunes antes de comenzar a usar Super Barato.
+          </p>
+          <div class="faq">
+            <details class="faq-item">
+              <summary>¿Super Barato vende productos directamente?</summary>
+              <p>
+                No. Super Barato no es una tienda ni un supermercado. Es una herramienta para 
+                ayudarte a comparar precios y organizar tus compras.
+              </p>
+            </details>
+            <details class="faq-item">
+              <summary>¿Los precios son siempre exactos?</summary>
+              <p>
+                Trabajamos para que la información sea lo más precisa posible, pero los precios pueden cambiar rápido.
+                Siempre valida el precio final en el supermercado o su app oficial.
+              </p>
+            </details>
+            <details class="faq-item">
+              <summary>¿La app será gratuita?</summary>
+              <p>
+                Sí. La comparación básica de precios será gratuita para los usuarios. 
+                En el futuro podríamos ofrecer funciones premium opcionales, 
+                pero la idea es que cualquiera pueda usar la app sin pagar.
+              </p>
+            </details>
+            <details class="faq-item">
+              <summary>¿En qué supermercados funciona?</summary>
+              <p>
+                Estamos trabajando para cubrir las principales cadenas de supermercados en Panamá 
+                e iremos sumando más con el tiempo.
+              </p>
+            </details>
+          </div>
+
+          <!-- CTA FINAL -->
+          <div class="cta-final" id="beta">
+            <div class="cta-final-title">Sé de los primeros en probar Super Barato</div>
+            <div class="cta-final-text">
+              Estamos en desarrollo activo. Si quieres que te avisemos cuando la app esté disponible,
+              déjanos tu correo electrónico.
+            </div>
+            <form class="cta-final-inputs" onsubmit="event.preventDefault(); alert('Gracias, tu correo ha sido registrado (demo).');">
+              <input type="email" name="email" placeholder="tu-correo@ejemplo.com" required>
+              <button type="submit">Quiero que me avisen</button>
+            </form>
+          </div>
+        </div>
+      </section>
     </main>
+
     <footer>
-      © 2025 Super Barato — Panamá
+      <div class="footer-inner">
+        <div>© 2025 Super Barato — Panamá</div>
+        <div class="footer-links">
+          <a href="/privacy">Privacidad</a>
+          <a href="/terms">Términos</a>
+          <a href="mailto:bluetechnologypty@gmail.com">Contacto</a>
+        </div>
+      </div>
     </footer>
   </div>
 </body>
