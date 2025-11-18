@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Super Barato — Compara precios de supermercados en Panamá</title>
   <meta name="description" content="Super Barato es una app para comparar precios y ofertas de supermercados en Panamá, ahorrar dinero y organizar mejor tus compras.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/icon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/logo-super-barato-icon.png">
+
   <style>
     :root {
       --bg: #f8fafc;
@@ -55,17 +60,11 @@
       align-items: center;
       gap: 10px;
     }
-    .brand-logo {
+    .brand-logo-img {
       width: 32px;
       height: 32px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #16a34a, #22c55e);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ecfdf5;
-      font-weight: 700;
-      font-size: 1rem;
+      border-radius: 8px;
+      display: block;
     }
     .brand-text {
       display: flex;
@@ -130,6 +129,14 @@
       .hero-inner {
         grid-template-columns: minmax(0, 1fr);
       }
+    }
+    .hero-logo {
+      margin-bottom: 8px;
+    }
+    .hero-logo-img {
+      max-width: 260px;
+      height: auto;
+      display: block;
     }
     .hero-tag {
       display: inline-flex;
@@ -431,7 +438,7 @@
     <header>
       <div class="header-inner">
         <div class="brand">
-          <div class="brand-logo">S</div>
+          <img src="img/logo-super-barato-icon.png" alt="Super Barato" class="brand-logo-img">
           <div class="brand-text">
             <div class="brand-name">Super Barato</div>
             <div class="brand-tagline">Compara precios en Panamá</div>
@@ -455,6 +462,9 @@
       <section class="hero">
         <div class="hero-inner">
           <div>
+            <div class="hero-logo">
+              <img src="img/logo-super-barato-full.png" alt="Logo Súper Barato" class="hero-logo-img">
+            </div>
             <div class="hero-tag">
               <span>✓</span> Tu asesor personal de ahorro en el súper
             </div>
